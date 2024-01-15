@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title -Asociacion de Sordos EFATA</title>
+    @Styles.Render("~/Content/css")
+    @*@Scripts.Render("~/bundles/modernizr")*@
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-secondary">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="@Url.Action("Index", "Home")">Asociacion de Sordos EFATA</a>
+        <!-- Sidebar Toggle-->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-lg-5 ms-lg-5" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <!-- Navbar Search-->
+        @*<form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group">
+                <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+            </div>
+        </form>*@
+        <!-- Navbar-->
+        <ul class="navbar-nav ms-auto me-0 me-md-3 my-2 my-md-0">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    @*
+                    <li><a class="dropdown-item" href="#!">Settings</a></li>
+                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>*@
+                    <li><hr class="dropdown-divider" /></li>
+                    <li><a class="dropdown-item" href="@Url.Action("Indexo", "Home")">Salir Programa</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>  @*Botones de la barra lateral 04 VID  min30*@
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Inicio</div>
+                        <a class="nav-link" href="@Url.Action("Index","Home")">
+                            @*Retorna A Home*@
+                            <div class="sb-nav-link-icon"><i class="fas fa-user-check"></i></div>
+                            Inicio
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Matricula","Home")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Matricula
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading">Nuevo Ingreso</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Matricula
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="@Url.Action("NuevaMatricula","Home")">Nueva Matricula</a>
+                                <a class="nav-link" href="@Url.Action("Matricula","Home")">Registros de Matricula</a>
+                            </nav>
+                        </div>
+
+
+
+
+                        <div class="sb-sidenav-menu-heading">Busquedas</div>
+                        <a class="nav-link collapsed" href="X" data-bs-toggle="collapse" data-bs-target="#XcollapseLayouts" aria-expanded="false" aria-controls="collapseLayoutsX">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Busquedas
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="XcollapseLayouts" aria-labelledby="XheadingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="@Url.Action("EstudiantesXEncargado","Home")">Estudiante X Encargado</a>
+                                <a class="nav-link" href="@Url.Action("CursoXProfesor","Home")">Curso X Profesor</a>
+                                <a class="nav-link" href="@Url.Action("UsuarioXMatricula","Home")">Usuario X Matricula</a>
+                            </nav>
+                        </div>
+
+
+
+                        <div class="sb-sidenav-menu-heading">Mantenimientos</div>
+                        <a class="nav-link collapsed" href="X" data-bs-toggle="collapse" data-bs-target="#XXcollapseLayouts" aria-expanded="false" aria-controls="collapseLayoutsX">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Mantenimientos
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="XXcollapseLayouts" aria-labelledby="XheadingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="@Url.Action("Estudiantes","Home")">Estudiantes</a>
+                                <a class="nav-link" href="@Url.Action("Padres","Home")">Encargado</a>
+                                <a class="nav-link" href="@Url.Action("Profesores","Home")">Profesores</a>
+                                <a class="nav-link" href="@Url.Action("Usuarios","Home")">Usuarios</a>
+                                <a class="nav-link" href="@Url.Action("Cursos","Home")">Cursos</a>
+
+                            </nav>
+                        </div>
+
+
+
+
+
+
+
+                        @*<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                    <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
+                    Pages
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                                <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
+                                            Authentication
+                                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                        </a>
+                                        <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                            <nav class="sb-sidenav-menu-nested nav">
+                                                <a class="nav-link" href="login.html">Login</a>
+                                                <a class="nav-link" href="register.html">Register</a>
+                                                <a class="nav-link" href="password.html">Forgot Password</a>
+                                            </nav>
+                                        </div>
+                                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
+                                            Error
+                                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                        </a>
+                                        <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                            <nav class="sb-sidenav-menu-nested nav">
+                                                <a class="nav-link" href="401.html">401 Page</a>
+                                                <a class="nav-link" href="404.html">404 Page</a>
+                                                <a class="nav-link" href="500.html">500 Page</a>
+                                            </nav>
+                                        </div>
+                                    </nav>
+                                </div>
+                                <div class="sb-sidenav-menu-heading">Mantenimientos</div> @*MANTENIMIENTOS vid 4 parte 04 titulos 34min
+                                <a class="nav-link" href="@Url.Action("Estudiantes","Home") ">
+                                    @*Matenimiento de Estudiante
+                                    <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+                                    Estudiante @*Crear nueva pagina y referenciarla vid05 3min
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Padres","Home")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-house-user"></i></div>
+                            Padre familia
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Profesores","Home")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+                            Profesores
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Usuarios","Home")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            Usuarios
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Cursos","Home")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                            Cursos
+                        </a>
+
+                    </div>
+                </div>*@
+
+                        <br/> <br /> <br /> <br/> <br /> <br />
+                <div class="sb-sidenav-footer">
+                    <div class="small">Sesion Iniciada por:</div>
+                    
+                        
+                        <label >Sesion Iniciada por:</label>
+                    
+                    
+                    <a href="@Url.Action("Indexo", "Home")">
+                        <button type="button" class="btn btn-warning">Cerrar Sesion</button>
+                    </a>
+                </div>
+            </nav>
+        </div>
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    @RenderBody()
+                </div>
+            </main>
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Asociacion de Sordos EFATA 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/complementos")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*      @RenderBody()
+               <hr />
+               <footer>
+                   <p>&copy; @DateTime.Now.Year - Asociacion de Sordos EFATA </p>
+               </footer>
+           </div>
+
+     
+
+
+
+    <li>@Html.ActionLink("Inicio", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+       // <li>@Html.ActionLink("Acerca de", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+       <li>@Html.ActionLink("Contacto", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+       <li>@Html.ActionLink("Pagina Practica", "Paginatest", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+*@

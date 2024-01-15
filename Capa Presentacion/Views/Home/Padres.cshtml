@@ -1,0 +1,418 @@
+﻿
+@{
+    ViewBag.Title = "Padres";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="index.html">Resumen</a></li>
+    <li class="breadcrumb-item active">Encargado</li>
+</ol>
+
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-user me-1"> </i> <h3>Lista de Encargado </h3>
+        <button type="button" class="btn btn-info" style='font-size:20px' onclick="ModalVideo(1)">Ayuda en LESCO  <i class='fas fa-american-sign-language-interpreting'></i></button>
+
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-success" onclick="abrirModal(null)">Crear Nuevo</button> @*Boton crear nuevo, coloque abrir modal = 0*@
+
+            </div>
+        </div>
+
+        <hr />
+        <table id="TablaEncargado" class="display cell-boarder " style="width: auto ">
+
+            <thead>
+                <tr>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Cedula</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Nombre</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Apellido</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Telefono</th>
+
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1"></th>
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+            </tbody>
+
+
+        </table>
+
+    </div>
+</div>
+
+
+<!-- Modal VID 08 inicio -->
+<div class="modal fade" id="FormModalES" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="exampleModalLabel"> Registro Encargado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <input id="Control" type="hidden" value="0" />
+
+                <div class="row g-2">
+
+                    <div class="col-sm-6">
+                        <label for="txtCedula" class="form-label">Cedula</label>
+                        <input type="number" class="form-control" id="txtCedula" placeholder="112345678" autocomplete="off">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="txtnombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="txtnombre" placeholder="Nombre" autocomplete="off">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="txtapellido" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="txtapellido" placeholder="Apellido" autocomplete="off">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="txtnumero" class="form-label">Telefono</label>
+                        <input type="number" class="form-control" id="txtnumero" placeholder="2222-2222" autocomplete="off">
+                    </div>
+
+
+
+                </div>
+
+                
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*MODAL DEL VIDEOS DE AYUDA*@
+<!-- Modal -->
+<div class="modal fade modal-lg" id="ModalVideo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Video Ayuda En Lesco</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <input type="text" class="form-control" id="tipovideo" hidden>
+
+            </div>
+
+            <div class="row">
+
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ug40buaIKGY?si=s3yU_GIu06VhEXXc&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+
+
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section scripts{
+    <script>
+
+        var tabladata;
+        var filaseleccionada;
+
+     $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("Listarencargado", "Home")',
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                debugger;
+                console.log(data)
+            }
+        })
+    });
+
+        tabladata = $("#TablaEncargado").DataTable({
+
+            Responsive: true,
+            ordering: false,
+            "ajax": {
+                url: '@Url.Action("Listarencargado", "Home")',
+                type: "GET",
+                dataType: "json",
+            },
+            "columns": [
+                { "data": "PF_PFCedula" },
+                { "data": "PF_Nombre" },
+                { "data": "PF_Apellido" },
+                { "data": "PF_telefono" },
+
+                {
+                    "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
+                    "Orderable": false,
+                    "Searchable": false,
+                    "width":"90px"
+
+                }
+                @*Para hacer botonoes min 22 VID 07*@
+
+
+
+            ],
+            "language": { "url":"//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json" }
+
+
+
+        });
+
+        function abrirModal(json) { @*Abre modal *@
+
+
+            $("#Control").val(0); // Control para crear usuario nuevo
+
+            $("#txtCedula").val("");
+            $("#txtnombre").val("");
+            $("#txtapellido").val("");
+            $("#txtnumero").val("");
+
+
+
+            if (json != null) {
+
+
+                $("#Control").val(1) //Control para actualizar usuario
+                $("#txtCedula").val(json.PF_PFCedula)
+                $("#txtnombre").val(json.PF_Nombre)
+                $("#txtapellido").val(json.PF_Apellido)
+                $("#txtnumero").val(json.PF_telefono)
+
+
+
+
+            }
+
+            $("#FormModalES").modal("show");
+
+
+        }
+
+        $("#TablaEncargado tbody").on("click", '.btn-editar', function () { // editar
+
+           // alert("hola")
+
+            filaseleccionada = $(this).closest("tr");  //trae los datos de la fila para el Update Video07 final
+           var data= tabladata.row(filaseleccionada).data();
+           // console.log(tabladata.row(filaseleccionada).data()); // ve la data en consola
+
+            console.log(data)
+
+
+            abrirModal(data)
+
+
+
+        })
+
+
+        $("#TablaEncargado tbody").on("click", '.btn-eliminar', function () { // elimina
+
+            // alert("hola")
+
+            var UsuarioSeleccionado = $(this).closest("tr");
+
+
+            var data = tabladata.row(UsuarioSeleccionado).data();
+
+            swal({
+                title: "Esta Seguro?",
+                text: "¿Desea Eliminar el Encargado?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Si, Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+                function () {
+
+                    jQuery.ajax({ // video 11 min8
+                        url: '@Url.Action("Eliminarencargado", "Home")',
+                        type: "POST",
+                        data: JSON.stringify({ id: data.PF_PFCedula }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+
+                            if (data.resultado) {
+
+                                tabladata.row(UsuarioSeleccionado).remove().draw();
+                                swal("Eliminado", "El Encargado seleccionado a sido eliminado", "success");
+                            } else {
+
+                                swal("No se pudo eliminar", data.mensaje, "error");
+
+                            }
+                        },
+                        error: function (error) {
+
+                        },
+
+
+
+                    });
+
+
+
+                });
+
+            console.log(data);
+
+        })
+
+
+
+        function Guardar() { // Guarda en la base de Datos
+
+
+            var Encargado = {
+
+
+                Control: $("#Control").val(),
+                PF_Apellido: $("#txtapellido").val(),
+                PF_PFCedula: $("#txtCedula").val(),
+                PF_Nombre: $("#txtnombre").val(),
+                PF_telefono: $("#txtnumero").val()
+
+
+            }
+            debugger;
+           jQuery.ajax({ // video 11 min8
+               url: '@Url.Action("Guardarencargado", "Home")',
+               type: "POST",
+               data: JSON.stringify({ objeto : Encargado }),
+               dataType: "json",
+               contentType: "application/json; charset=utf-8",
+               success: function (data) {
+
+                   debugger;
+                   $('.modal-body').LoadingOverlay("hide");
+
+
+                   // USUARIO NUEVO
+                   if (Encargado.Control == 0) { // esta creando nuevo =0 y actualizando =1
+
+                        alert("Creando")
+                        if (data.resultado != 0) {
+
+                            Encargado.Control = data.resultado;
+                            tabladata.row.add(Encargado).draw(false);
+                            $("#FormModalES").modal("hide");
+
+
+                        } else if (data.mensaje == "No se puede convertir un objeto DBNull en otros tipos.") {
+                            Encargado.Control = data.resultado;
+                            tabladata.row.add(Encargado).draw(false);
+                            $("#FormModalES").modal("hide");
+
+
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+
+
+
+                        // USUARIO Actualizar/ editar
+                    } else {
+                        alert("Actualizando")
+
+                        if (data.resultado) {
+
+                            tabladata.row(filaseleccionada).data(Encargado).draw(false);
+                            filaseleccionada = null;
+                            $("#FormModalES").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+
+                        }
+                    }
+
+                },
+               error: function (error) {
+                   $('.modal-body').LoadingOverlay("hide");
+                   console.log(data)
+                   $("#mensajeError").text("Error ajax");
+                   $("#mensajeError").show();
+               },
+
+
+               beforeSend: function () {
+                   $('.modal-body').LoadingOverlay("show", { imageResizeFactor: 2, text:"Cargando...",size:14 })
+
+
+               }
+
+
+            });
+
+
+        }
+
+        function ModalVideo(opcion) {
+
+
+            $("#ModalVideo").modal("show");
+
+        }
+
+
+
+
+
+// ID USUARIO MIN 10 VIDEO 09
+    </script>
+}
+
+

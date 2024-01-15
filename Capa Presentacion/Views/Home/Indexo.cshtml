@@ -1,0 +1,561 @@
+﻿
+@{
+
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body class="bg-secondary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <div class="card shadow-lg border-0 rounded-lg bg-primary mt-5">
+                                <div class="card-header"><h3 class="text-center font-weight-light my-4">Inicio</h3></div>
+                                <div class="card-body">
+                                    <form action="@Url.Action("Indexo", "Home")" method="post">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" name="usuariox" type="text" placeholder="Usuario" autocomplete="off" />
+                                            <label for="inputEmail">Usuario</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" name="clave" type="password" placeholder="Contrasena" autocomplete="off" />
+                                            <label for="inputPassword">Contrasena</label>
+                                        </div>
+                                        @{
+
+
+                                            if (ViewBag.Error != null)
+                                            {
+
+                                                <div class="form-floating mb-3">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        @ViewBag.Error
+                                                    </div>
+
+                                                </div>
+                                                Console.Beep();
+
+                                            }
+                                            else if (ViewBag.Nombre != null)
+                                            {
+
+                                                <div class="row g-2">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="CedulaU" autocomplete="off" value=@ViewBag.Cedula hidden>
+
+                                                        <input type="text" class="form-control" id="NombreU" autocomplete="off" value=@ViewBag.Nombre hidden>
+                                                        <input type="text" class="form-control" id="ApeU" autocomplete="off" value=@ViewBag.Ape hidden>
+                                                        <label for="Bienvenido">Bienvenido @ViewBag.Nombre</label>
+                                                        <br /><br />
+                                                        <button type="button" class="btn btn-success" onclick="Continuar()">Continuar</button>
+                                                    </div>
+                                                </div>
+
+
+
+
+
+
+                                            }
+
+
+
+
+                                        }
+
+
+
+
+
+
+
+
+
+                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                            <a class="small" href="password.html">Olvido contrasena?</a>
+                                            <button type="submit" class="btn btn-success">Iniciar Sesion</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Asociacion de Sordos Efata 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+
+@section scripts{
+    <script>
+
+        debugger;
+        localStorage.clear()
+        window.localStorage.clear()
+
+        function Continuar() {
+            
+          
+
+            localStorage.setItem('Nombre', ($("#NombreU").val()));
+            localStorage.setItem('Ced', ($("#CedulaU").val()));
+            localStorage.setItem('Ape', ($("#ApeU").val()));
+
+            window.location.href = '/Home/Index' ;
+
+        }
+
+
+
+
+        var tabladata;
+        var filaseleccionada;
+
+     $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("Listarestudiante","Home")',
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                debugger;
+                console.log(data)
+            }
+        })
+    });
+
+        tabladata = $("#TablaEstudiante").DataTable({
+
+            Responsive: true,
+            ordering: false,
+            "ajax": {
+                url: '@Url.Action("Listarestudiante","Home")',
+                type: "GET",
+                dataType: "json",
+            },
+            "columns": [
+                { "data": "ES_CedulaES" },
+                { "data": "ES_Nombre" },
+                { "data": "ES_Apellido" },
+                { "data": "ES_Telefono" },
+                { "data": "ES_Correo" },
+                { "data": "ES_Provincia" },
+                { "data": "ES_FechaIngreso" },
+                { "data": "ES_FechaNacim" },
+                { "data": "ES_SEXO" },
+                { "data": "ES_Discap" },
+                { "data": "ES_PadreCed" },
+                {
+                    "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
+                    "Orderable": false,
+                    "Searchable": false,
+                    "width":"90px"
+
+                }
+                @*Para hacer botonoes min 22 VID 07*@
+
+
+
+            ],
+            "language": { "url":"//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json" }
+
+
+
+        });
+
+        function abrirModal(json) { @*Abre modal *@
+
+
+            $("#Control").val(0); // Control para crear usuario nuevo
+
+            $("#txtCedula").val("");
+            $("#txtnombre").val("");
+            $("#txtapellido").val("");
+            $("#txtnumero").val("");
+            $("#txtcorreo").val("");
+            $("#txtprovincia").val("");
+            $("#txtfechain").val("");
+            $("#txtfechana").val("");
+            $("#txtsexo").val("");
+            $("#txtdiscapacidad").val("");
+            $("#txtcedulaencarg").val("");
+            $("#mensajeError").hide();
+
+
+
+            if (json != null) {
+
+                var Fechainicial = "";
+                var fechafinal = "";
+                var comprueba = "";
+
+
+                $("#Control").val(1) //Control para actualizar usuario
+                $("#txtCedula").val(json.ES_CedulaES)
+                $("#txtnombre").val(json.ES_Nombre)
+                $("#txtapellido").val(json.ES_Apellido)
+                $("#txtnumero").val(json.ES_Telefono)
+                $("#txtcorreo").val(json.ES_Correo)
+                $("#txtprovincia").val(json.ES_Provincia == (json.ES_Provincia) ? (json.ES_Provincia) : null)
+
+                Fechainicial = (json.ES_FechaNacim).split("/");
+
+                if (Fechainicial[0].length == 1) { // Tony del futuro Busca pq el .lenght da uno
+                    Fechainicial[0] = "0" + Fechainicial[0]
+
+                }
+
+                if (Fechainicial[1].length == 1) {
+                    Fechainicial[1] = "0" + Fechainicial[1]
+                 }
+                    fechafinal = Fechainicial[2].substring(0, 4) + "-" + Fechainicial[0] + "-" + Fechainicial[1];
+
+                $("#txtfechana").val(fechafinal);
+
+
+
+                Fechainicial = (json.ES_FechaIngreso).split("/");
+                if (Fechainicial[0].length == 1) {
+                    Fechainicial[0] = "0" + Fechainicial[0]
+                }
+                if (Fechainicial[1].length == 1) {
+                    Fechainicial[1] = "0" + Fechainicial[1]
+                }
+
+                fechafinal = Fechainicial[2].substring(0,4) + "-" + Fechainicial[0] + "-" + Fechainicial[1];
+                $("#txtfechain").val(fechafinal);
+
+
+               //   $("#txtfechana").val("2023-11-23");
+              //  $("#txtfechana").val("2023-11-23"); // ASI RECIBE EL PICKER // Puedes crear una variable date y cambiarle el formato y lego cargarla al date picker
+                $("#txtsexo").val(json.ES_SEXO == (json.ES_SEXO) ? (json.ES_SEXO) : null)
+                $("#txtdiscapacidad").val(json.ES_Discap == (json.ES_Discap) ? (json.ES_Discap) : null)
+                $("#txtcedulaencarg").val(json.ES_PadreCed)
+                debugger;
+
+
+            }
+
+            $("#FormModalES").modal("show");
+
+
+        }
+
+        $("#TablaEstudiante tbody").on("click", '.btn-editar', function () { // editar
+
+           // alert("hola")
+
+            filaseleccionada = $(this).closest("tr");  //trae los datos de la fila para el Update Video07 final
+           var data= tabladata.row(filaseleccionada).data();
+            // console.log(tabladata.row(filaseleccionada).data()); // ve la data en consola
+
+            console.log(data)
+
+
+            abrirModal(data)
+
+
+
+        })
+
+
+        $("#TablaEstudiante tbody").on("click", '.btn-eliminar', function () { // elimina
+
+            // alert("hola")
+
+            var UsuarioSeleccionado = $(this).closest("tr");
+
+
+            var data = tabladata.row(UsuarioSeleccionado).data();
+
+            swal({
+                title: "Esta Seguro?",
+                text: "¿Desea Eliminar el Estudiante?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Si, Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+                function () {
+
+                    jQuery.ajax({ // video 11 min8
+                        url: '@Url.Action("Eliminarestudiante", "Home")',
+                        type: "POST",
+                        data: JSON.stringify({ id: data.ES_CedulaES }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+
+                            if (data.resultado) {
+
+                                tabladata.row(UsuarioSeleccionado).remove().draw();
+                                swal("Eliminado", "El Estudiante seleccionado a sido eliminado", "success");
+                            } else {
+
+                                swal("No se pudo eliminar", data.mensaje, "error");
+
+                            }
+                        },
+                        error: function (error) {
+
+                        },
+
+
+
+                    });
+
+
+
+                });
+
+            console.log(data);
+
+        })
+
+
+
+        function Guardar() { // Guarda en la base de Datos
+
+
+            var Estudiante = {
+
+
+                Control: $("#Control").val(),
+                ES_Apellido: $("#txtapellido").val(),
+                ES_CedulaES: $("#txtCedula").val(),
+                ES_Correo: $("#txtcorreo").val(),
+                ES_Discap: $("#txtdiscapacidad").val(),
+                ES_FechaIngreso: $("#txtfechain").val(),
+                ES_FechaNacim: $("#txtfechana").val(),
+                ES_Nombre: $("#txtnombre").val(),
+                ES_PadreCed: $("#txtcedulaencarg").val(),
+                ES_Provincia: $("#txtprovincia").val(),
+                ES_SEXO: $("#txtsexo").val(),
+                ES_Telefono: $("#txtnumero").val()
+
+
+            }
+            debugger;
+           jQuery.ajax({ // video 11 min8
+               url: '@Url.Action("Guardarestudiante", "Home")',
+               type: "POST",
+               data: JSON.stringify({ objeto : Estudiante }),
+               dataType: "json",
+               contentType: "application/json; charset=utf-8",
+               success: function (data) {
+
+                   debugger;
+                   $('.modal-body').LoadingOverlay("hide");
+
+
+                    // USUARIO NUEVO
+                    if (Estudiante.Control == 0) { // esta creando nuevo =0 y actualizando =1
+
+                        alert("Creando")
+                        if (data.resultado != 0) {
+
+                            Estudiante.Control = data.resultado;
+                            tabladata.row.add(Estudiante).draw(false);
+                            $("#FormModalES").modal("hide");
+
+
+                        } else if (data.mensaje == "No se puede convertir un objeto DBNull en otros tipos.") {
+                            Estudiante.Control = data.resultado;
+                            tabladata.row.add(Estudiante).draw(false);
+                            $("#FormModalES").modal("hide");
+
+
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+
+
+
+                        // USUARIO Actualizar/ editar
+                    } else {
+                        alert("Actualizando")
+
+                        if (data.resultado) {
+
+                            tabladata.row(filaseleccionada).data(Estudiante).draw(false);
+                            filaseleccionada = null;
+                            $("#FormModalES").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+
+                        }
+                    }
+
+                },
+               error: function (error) {
+                   $('.modal-body').LoadingOverlay("hide");
+                   console.log(data)
+                   $("#mensajeError").text("Error ajax");
+                   $("#mensajeError").show();
+               },
+
+
+               beforeSend: function () {
+                   $('.modal-body').LoadingOverlay("show", { imageResizeFactor: 2, text:"Cargando...",size:14 })
+
+               }
+
+            });
+
+        }
+
+
+
+        function ModalVideo(opcion) {
+
+            //alert(valorGlobal);
+
+
+
+
+            $("#ModalVideo").modal("show");
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //LLENA PADRES////////////////////////////////////////////////
+             var tabladatax;
+            var filaseleccionadax;
+
+         $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("Listarencargado", "Home")',
+                type: "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    debugger;
+                    console.log(data)
+                }
+            })
+        });
+
+            tabladatax = $("#TablaEncargado").DataTable({
+
+                Responsive: true,
+                ordering: false,
+                "ajax": {
+                    url: '@Url.Action("Listarencargado", "Home")',
+                    type: "GET",
+                    dataType: "json",
+                },
+                "columns": [
+                    { "data": "PF_PFCedula" },
+                    { "data": "PF_Nombre" },
+                    { "data": "PF_Apellido" },
+                    { "data": "PF_telefono" },
+
+                    {
+                        "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-seleccion"><i class="far fa-check-circle"></i>Seleccione Encargado</button>',
+                        "Orderable": false,
+                        "Searchable": false,
+                        "width":"90px"
+
+                    }
+                    @*Para hacer botonoes min 22 VID 07*@
+
+
+
+                ],
+                "language": { "url":"//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json" }
+
+
+
+            });
+
+        $("#TablaEncargado tbody").on("click", '.btn-seleccion', function () {
+            debugger;
+
+            alert(@ViewBag.nombrecompleto)
+
+            filaseleccionadax = $(this).closest("tr");
+
+            var dataes = tabladatax.row(filaseleccionadax).data()
+            $("#txtcedulaencarg").val(dataes.PF_PFCedula)
+            $("#txtNombreEncargado").val(dataes.PF_Nombre + " " + dataes.PF_Apellido)
+
+
+            debugger;
+
+
+            console.log(data)
+
+
+            // abrirModal(data)
+
+
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ID USUARIO MIN 10 VIDEO 09
+    </script>
+}

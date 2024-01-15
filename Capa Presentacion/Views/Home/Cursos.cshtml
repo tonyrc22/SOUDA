@@ -1,0 +1,601 @@
+﻿
+@{
+    ViewBag.Title = "Cursos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+   // var Usuario = @ViewBag.oUsuario;
+    //var Usuario = ViewData.message;
+
+}
+
+
+<ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="index.html">Resumen</a></li>
+    <li class="breadcrumb-item active ">  Cursos </li>
+</ol>
+
+
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-user "> </i>  <h3>Lista de Cursos </h3>
+        <button type="button" class="btn btn-info" style='font-size:20px' onclick="ModalVideo(1)">Ayuda en LESCO  <i class='fas fa-american-sign-language-interpreting'></i></button>
+
+
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-success" onclick="abrirModal(null)">Crear Nuevo</button> @*Boton crear nuevo, coloque abrir modal = 0*@
+
+            </div>
+        </div>
+
+        <hr />
+        <table id="TablaCurso" class="display cell-boarder " style="width: auto ">
+
+            <thead>
+                <tr>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Codigo</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Nombre</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Fecha Inicio</th>
+                    @*<th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Telefono</th>
+                        <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Correo</th>
+                        <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Provincia</th>
+                        <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Fecha de ingreso</th>
+                        <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Fecha Nacimeinto</th>
+                        <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Sexo</th>
+                        <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Discapacidad</th>
+                        <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Cedula Encarg</th>*@
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1"></th>
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+            </tbody>
+
+
+        </table>
+
+    </div>
+</div>
+
+
+<!-- Modal VID 08 inicio -->
+<div class="modal fade modal-xl" id="FormModalES" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="exampleModalLabel"> Registro Curso</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+
+                @*DEsde aca el seleccionador de profes*@
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-user me-1"> </i> <h3>1. Seleccione el profesor a relacionar al curso </h3>
+                        <button type="button" class="btn btn-info" style='font-size:20px' onclick="ModalVideo(1)">Ayuda en LESCO  <i class='fas fa-american-sign-language-interpreting'></i></button>
+
+
+                    </div>
+                    <div class="card-body">
+
+
+                        <hr />
+                        <table id="TablaProfesor" class="display cell-boarder " style="width: auto ">
+
+                            <thead>
+                                <tr>
+                                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Cedula</th>
+                                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Nombre</th>
+                                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Apellido</th>
+                                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Fecha de ingreso</th>
+                                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Telefono</th>
+
+                                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1"></th>
+
+
+                                </tr>
+
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+
+                        </table>
+
+                    </div>
+                </div>
+
+                <br /> <br /> <br /> <br />
+
+
+
+                <i class="fas fa-user me-1"> </i> <h3>2. Ingrese informacion del nuevo curso </h3>
+
+                <input id="Control" type="hidden" value="0" />
+
+                <div class="row g-2">
+
+                    <div class="col-sm-6">
+                        <label for="txtCedula" class="form-label">Codigo</label>
+                        <input type="number" class="form-control" id="txtcodigo" placeholder="000" autocomplete="off" data-bind="value:replyNumber">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="txtnombre" class="form-label">Nombre del Curso</label>
+                        <input type="text" class="form-control" id="txtnombre" placeholder="Curso" autocomplete="off">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="txtfechain" class="form-label">Fecha Inicio</label>
+                        <input type="date" class="form-control" id="txtfechain" placeholder="Mes/Dia/Año">
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="NombreProf" class="form-label">Profesor Seleccionado</label>
+                        <input type="text" class="form-control" id="NombreProf" placeholder="Seleccione profe" autocomplete="off" readonly>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <label for="CedProf" class="form-label"> Cedula Profesor Seleccionado</label>
+                        <input type="number" class="form-control" id="CedProf" placeholder="Seleccione profe" autocomplete="off" readonly>
+                    </div>
+
+
+
+
+                </div>
+
+                <div class="row mt-2">
+                    <div class="col-12">
+
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                            A simple danger alert—check it out!
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*MODAL DEL VIDEOS DE AYUDA*@
+<!-- Modal -->
+<div class="modal fade modal-lg" id="ModalVideo" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Video Ayuda En Lesco</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <input type="text" class="form-control" id="tipovideo" hidden>
+
+            </div>
+
+            <div class="row">
+                
+               
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ug40buaIKGY?si=s3yU_GIu06VhEXXc&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
+
+
+
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section scripts{
+    <script>
+
+        var tabladata;
+        var filaseleccionada;
+
+
+        //localStorage.setItem('Guarda', 'Prueba');
+        //sessionStorage.setItem('Hola', 'Prueba');
+        //sessionStorage.setItem('Nombre', 'Miguel Antonio')
+        //localStorage.setItem('Guarda', 'Prueba');
+
+
+
+
+
+
+
+
+
+
+     $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("Listarcurso","Home")',
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                debugger;
+                console.log(data)
+            }
+        })
+    });
+
+        tabladata = $("#TablaCurso").DataTable({
+
+            Responsive: true,
+            ordering: false,
+            "ajax": {
+                url: '@Url.Action("Listarcurso","Home")',
+                type: "GET",
+                dataType: "json",
+            },
+            "columns": [
+                { "data": "CU_CodCurso"},
+                { "data": "CU_Nombre" },
+                { "data": "CU_FechaInicio" },
+
+                {
+                    "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
+                    "Orderable": false,
+                    "Searchable": false,
+                    "width":"90px"
+
+                }
+                @*Para hacer botonoes min 22 VID 07*@
+
+
+
+            ],
+            "language": { "url":"//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json" }
+
+
+
+        });
+
+        function abrirModal(json) { @*Abre modal *@
+
+
+            $("#Control").val(0); // Control para crear usuario nuevo
+
+            $("#txtCodigo").val("");
+            $("#txtnombre").val("");
+            $("#txtfechain").val("");
+            $("#CedProf").val("");
+            $("#NombreProf").val("");
+
+            $("#mensajeError").hide();
+
+
+
+            if (json != null) {
+
+                var Fechainicial = "";
+                var fechafinal = "";
+
+
+                $("#Control").val(1) //Control para actualizar usuario
+                $("#txtcodigo").val(json.CU_CodCurso)
+                $("#txtnombre").val(json.CU_Nombre)
+
+                Fechainicial = (json.CU_FechaInicio).split("/");
+
+                if (Fechainicial[0].length == 1) {
+                    Fechainicial[0] = "0" + Fechainicial[0]
+                }
+                if (Fechainicial[1].length == 1) {
+                    Fechainicial[1] = "0" + Fechainicial[1]
+                }
+
+                fechafinal = Fechainicial[2].substring(0, 4) + "-" + Fechainicial[0] + "-" + Fechainicial[1];
+                $("#txtfechain").val(fechafinal);
+                debugger;
+
+
+
+
+            }
+
+            $("#FormModalES").modal("show");
+
+
+        }
+
+        $("#TablaCurso tbody").on("click", '.btn-editar', function () { // editar
+
+            //var Globos = Session["UsuarioNombre"].Tostring();
+
+
+            filaseleccionada = $(this).closest("tr");  //trae los datos de la fila para el Update Video07 final
+           var data= tabladata.row(filaseleccionada).data();
+           // console.log(tabladata.row(filaseleccionada).data()); // ve la data en consola
+
+            console.log(data)
+
+            debugger;
+            abrirModal(data)
+
+
+
+
+        })
+
+
+        $("#TablaCurso tbody").on("click", '.btn-eliminar', function () { // elimina
+
+            // alert("hola")
+
+            var UsuarioSeleccionado = $(this).closest("tr");
+
+
+            var data = tabladata.row(UsuarioSeleccionado).data();
+
+            swal({
+                title: "Esta Seguro?",
+                text: "¿Desea Eliminar el Curso?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Si, Eliminar",
+                cancelButtonText: "Cancelar",
+                closeOnConfirm: false
+            },
+                function () {
+
+                    jQuery.ajax({ // video 11 min8
+                        url: '@Url.Action("Eliminarcurso", "Home")',
+                        type: "POST",
+                        data: JSON.stringify({ id: data.CU_CodCurso }),
+                        dataType: "json",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+
+                            if (data.resultado) {
+
+                                tabladata.row(UsuarioSeleccionado).remove().draw();
+                                swal("Eliminado", "El Curso seleccionado a sido eliminado", "success");
+                            } else {
+
+                                swal("No se pudo eliminar", data.mensaje, "error");
+
+                            }
+                        },
+                        error: function (error) {
+
+                        },
+
+
+
+                    });
+
+
+
+                });
+
+            console.log(data);
+
+        })
+
+
+
+        function Guardar() { // Guarda en la base de Datos
+
+
+            var Curso = {
+
+
+                Control: Number( $("#Control").val()),
+                CU_CodCurso: Number($("#txtcodigo").val()),
+                CU_FechaInicio: $("#txtfechain").val(),
+                CU_Nombre: $("#txtnombre").val(),
+                CU_CedProf: Number( $("#CedProf").val()),
+        
+
+
+
+
+            }
+            debugger;
+           jQuery.ajax({ // video 11 min8
+               url: '@Url.Action("Guardarcurso", "Home")',
+               type: "POST",
+               data: JSON.stringify({ objeto : Curso }),
+               dataType: "json",
+               contentType: "application/json; charset=utf-8",
+               success: function (data) {
+
+                   debugger;
+                   $('.modal-body').LoadingOverlay("hide");
+
+
+                    // USUARIO NUEVO
+                    if (Curso.Control == 0) { // esta creando nuevo =0 y actualizando =1
+
+                        alert("Creando")
+                        if (data.resultado != 0) {
+
+                            Curso.Control = data.resultado;
+                            tabladata.row.add(Curso).draw(false);
+                            $("#FormModalES").modal("hide");
+
+
+                        } else if (data.mensaje == "No se puede convertir un objeto DBNull en otros tipos.") {
+                            Curso.Control = data.resultado;
+                            tabladata.row.add(Curso).draw(false);
+                            $("#FormModalES").modal("hide");
+
+                            
+                        } else {
+
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+
+                        }
+
+
+
+                        // USUARIO Actualizar/ editar
+                    } else {
+                        alert("Actualizando")
+
+                        if (data.resultado) {
+
+                            tabladata.row(filaseleccionada).data(Curso).draw(false);
+                            filaseleccionada = null;
+                            $("#FormModalES").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+
+                        }
+                    }
+
+                },
+               error: function (error) {
+                   $('.modal-body').LoadingOverlay("hide");
+                   console.log(data)
+                   $("#mensajeError").text("Error ajax");
+                   $("#mensajeError").show();
+               },
+
+
+               beforeSend: function () {
+                   $('.modal-body').LoadingOverlay("show", { imageResizeFactor: 2, text:"Cargando...",size:14 })
+
+
+               }
+
+            });
+
+        }
+
+        function ModalVideo(opcion) {
+
+
+            $("#ModalVideo").modal("show");
+
+        }
+
+
+
+            var tabladatax;
+    var filaseleccionadax;
+
+ $(document).ready(function () {
+    $.ajax({
+        url: '@Url.Action("Listarprofesor", "Home")',
+        type: "GET",
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (data) {
+            debugger;
+            console.log(data)
+        }
+    })
+});
+
+        tabladatax = $("#TablaProfesor").DataTable({
+
+        Responsive: true,
+        ordering: false,
+        "ajax": {
+            url: '@Url.Action("Listarprofesor", "Home")',
+            type: "GET",
+            dataType: "json",
+        },
+        "columns": [
+            { "data": "PR_CedProf" },
+            { "data": "PR_Nombre" },
+            { "data": "PR_Apellido" },
+            { "data": "PR_FechaIngreso" },
+            { "data": "PR_Telefono" },
+
+            {
+                "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-seleccion"><i class="far fa-check-circle"></i>Seleccione Profesor</button>',
+                "Orderable": false,
+                "Searchable": false,
+                "width":"90px"
+
+            }
+            @*Para hacer botonoes min 22 VID 07*@
+
+
+
+        ],
+        "language": { "url":"//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json" }
+
+
+
+    });
+
+
+
+
+        $("#TablaProfesor tbody").on("click", '.btn-seleccion', function () {
+
+            alert("hi");
+
+            filaseleccionadax = $(this).closest("tr");
+
+            var dataes = tabladatax.row(filaseleccionadax).data()
+            $("#CedProf").val(dataes.PR_CedProf)
+            $("#NombreProf").val(dataes.PR_Nombre + " " + dataes.PR_Apellido)
+            
+
+            debugger;
+
+
+            console.log(data)
+
+
+            // abrirModal(data)
+
+
+
+        })
+
+
+        //var hola = string.Format("sessionStorage.userId= '{0}';", "12345");
+
+
+
+    </script>
+}

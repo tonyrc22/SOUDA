@@ -1,0 +1,130 @@
+﻿
+@{
+    ViewBag.Title = "CursoXProfesor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="index.html">Resumen</a></li>
+    <li class="breadcrumb-item active ">  BBusqueda Curso X Profesor </li>
+</ol>
+
+
+
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-user "> </i>  <h3>Busqueda Curso X Profesor </h3>
+        <button type="button" class="btn btn-info" style='font-size:20px' onclick="ModalVideo(1)">Ayuda en LESCO  <i class='fas fa-american-sign-language-interpreting'></i></button>
+
+    </div>
+    
+
+        <hr />
+        <table id="TablaCurso" class="display cell-boarder " style="width: auto ">
+
+            <thead>
+                <tr>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Codigo Curso</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Fecha Inicio del Curso</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Nombre Curso</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Cedula Profesor</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Nombre del Profesor</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Fecha Ingreso Profesor</th>
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1">Telefono</th>
+
+                    <th class="sorting" tabindex="0" aria-controls="TASK_LIST_GRID" rowspan="1" colspan="1"></th>
+
+
+                </tr>
+
+            </thead>
+            <tbody>
+            </tbody>
+
+
+        </table>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+@section scripts{
+    <script>
+
+        var tabladata;
+        var filaseleccionada;
+
+     $(document).ready(function () {
+        $.ajax({
+            url: '@Url.Action("Listarcursoxprofesor", "Home")',
+            type: "GET",
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                debugger;
+                console.log(data)
+            }
+        })
+    });
+
+        tabladata = $("#TablaCurso").DataTable({
+
+            Responsive: true,
+            ordering: false,
+            "ajax": {
+                url: '@Url.Action("Listarcursoxprofesor", "Home")',
+                type: "GET",
+                dataType: "json",
+            },
+            "columns": [
+                { "data": "CU_CodCurso" },
+                { "data": "CU_FechaInicio" },
+                { "data": "CU_Nombre" },
+                { "data": "PR_CedProf" },
+                { "data": "PR_Nombre" },
+                { "data": "PR_FechaIngreso" },
+                { "data": "PR_Telefono" },
+                
+                {
+                    "defaultContent": "",
+                    "Orderable": false,
+                    "Searchable": false,
+                    "width":"90px"
+
+                }
+                @*Para hacer botonoes min 22 VID 07*@
+
+
+
+            ],
+            "language": { "url":"//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json" }
+
+
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+// ID USUARIO MIN 10 VIDEO 09
+    </script>
+}

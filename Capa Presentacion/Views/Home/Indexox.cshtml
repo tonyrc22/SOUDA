@@ -1,0 +1,152 @@
+﻿@{
+    Layout = null;
+
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body class="bg-secondary">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-5">
+                            <div class="card shadow-lg border-0 rounded-lg bg-primary mt-5">
+                                <div class="card-header"><h3 class="text-center font-weight-light my-4">Inicio</h3></div>
+                                <div class="card-body">
+                                    <form  action="@Url.Action("Indexo", "Home")" method="post">
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" name="usuariox" type="text" placeholder="Usuario" autocomplete="off" />
+                                            <label for="inputEmail">Usuario</label>
+                                        </div>
+                                        <div class="form-floating mb-3">
+                                            <input class="form-control" name="clave" type="password" placeholder="Contrasena" autocomplete="off" />
+                                            <label for="inputPassword">Contrasena</label>
+                                        </div>
+                                        @{
+
+
+                                            if (ViewBag.Error != null)
+                                            {
+
+                                                <div class="form-floating mb-3">
+                                                    <div class="alert alert-danger" role="alert">
+                                                        @ViewBag.Error
+                                                    </div>
+
+                                                </div>
+                                                Console.Beep();
+
+                                            }
+                                            else if (ViewBag.Nombre != null)
+                                            {
+
+                                                <div class="row g-2">
+                                                    <div class="form-floating mb-3">
+                                                        <label for="Bienvenido">Bienvenido @ViewBag.Nombre</label>
+                                                        <br /><br />
+                                                        <button type="button" class="btn btn-outline-success" onclick="Prueba()">Continuar</button>
+                                                    </div>
+                                                </div>
+                                                
+
+
+
+
+
+                                            }
+
+
+
+
+                                        }
+
+                                        
+
+
+
+
+
+
+
+                                        <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                            <a class="small" href="password.html">Olvido contrasena?</a>
+                                            <button type="submit" class="btn btn-success">Iniciar Sesion</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div class="text-muted">Copyright &copy; Asociacion de Sordos Efata 2023</div>
+                        <div>
+                            <a href="#">Privacy Policy</a>
+                            &middot;
+                            <a href="#">Terms &amp; Conditions</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <script src="~/Scripts/bootstrap.bundle.js"></script>
+</body>
+</html>
+
+
+
+@section scripts{
+    <script>
+
+
+        debugger;
+
+        if (Usu != null) {
+            alert("Tony")
+
+            var Usu = "Tony";
+            localStorage.setItem('Guarda', 'Prueba');
+            RedirectToAction("Index", "Home");
+
+        }
+
+        function Prueba() {
+            alert("Tony")
+
+            var Usu = "Tony";
+            localStorage.setItem('Guarda', 'Prueba');
+            RedirectToAction("Index", "Home");
+
+        }
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
